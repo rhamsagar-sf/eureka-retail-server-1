@@ -206,13 +206,17 @@ app.get("/returnhistories", (req, res) => {
     //     res.send(result.rows);
     //   }
     // );
-    conn.query("SELECT Id, Name FROM Account", function (err, result) {
-      if (err) {
-        return console.error(err);
+    conn.query(
+      "SELECT Name, Item_SKU__c, Return_Reason__c, Returned_Date__c, Delivery_Status__c FROM Eureka_Returned_Item__c",
+      function (err, result) {
+        if (err) {
+          return console.error(err);
+        }
+        console.log("total : " + result.totalSize);
+        console.log("fetched : " + result.records.length);
+        res.send(result.rows);
       }
-      console.log("total : " + result.totalSize);
-      console.log("fetched : " + result.records.length);
-    });
+    );
   }
 });
 
