@@ -196,16 +196,23 @@ app.get("/returnhistories", (req, res) => {
     res.end("Access denied");
   } else {
     console.log("/returnhistories called");
-    conn.query(
-      `SELECT Name, Id, CreatedDate, Delivery__c FROM Eureka_Retail_Inventory__c'`,
-      (err, result) => {
-        if (err) throw err;
-        for (let row of result.rows) {
-          console.log(JSON.stringify(row));
-        }
-        res.send(result.rows);
+    // conn.query(
+    //   `SELECT Name, Id, CreatedDate, Delivery__c FROM Eureka_Retail_Inventory__c'`,
+    //   (err, result) => {
+    //     if (err) throw err;
+    //     for (let row of result.rows) {
+    //       console.log(JSON.stringify(row));
+    //     }
+    //     res.send(result.rows);
+    //   }
+    // );
+    conn.query("SELECT Id, Name FROM Account", function (err, result) {
+      if (err) {
+        return console.error(err);
       }
-    );
+      console.log("total : " + result.totalSize);
+      console.log("fetched : " + result.records.length);
+    });
   }
 });
 
