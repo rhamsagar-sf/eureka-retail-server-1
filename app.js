@@ -4,6 +4,7 @@ var bodyParser = require("body-parser");
 const cors = require("cors");
 const basicAuth = require("basic-auth");
 var compare = require("tsscmp");
+const jsforce = require("jsforce");
 
 dotenv.config();
 
