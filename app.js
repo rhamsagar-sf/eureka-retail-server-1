@@ -170,6 +170,43 @@ app.delete("/customers/:userId", (req, res) => {
   }
 });
 
+// JSFORCE Demo
+
+// Login Salesforce
+const { SF_LOGIN_URL, SF_USERNAME, SF_PASSWORD, SF_TOKEN } = process.env;
+const conn = new jsforce.Connection({
+  loginURL: SF_LOGIN_URL,
+});
+conn.login(SF_USERNAME, SF_PASSWORD + SF_TOKEN, (err, userInfo) => {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log("User ID" + userInfo.id);
+    console.log("Org ID" + userInfo.organizationId);
+  }
+});
+
+// get all return histories using JSForce
+app.get("/returnhistories", (req, res) => {
+  var credentials = basicAuth(req);
+  if (!credentials || !checkCredentials(credentials.name, credentials.pass)) {
+    res.statusCode = 401;
+    res.setHeader("WWW-Authenticate", 'Basic realm="example"');
+    res.end("Access denied");
+  } else {
+    conn.query(
+      `SELECT Name, Id, CreatedDate, Delivery__c FROM Eureka_Retail_Inventory__c'`,
+      (err, result) => {
+        if (err) throw err;
+        for (let row of result.rows) {
+          console.log(JSON.stringify(row));
+        }
+        res.send(result.rows);
+      }
+    );
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`App listening at http://localhost:${PORT}`);
 });
