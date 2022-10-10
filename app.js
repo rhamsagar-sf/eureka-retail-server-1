@@ -68,6 +68,7 @@ app.get("/customers", (req, res) => {
         for (let row of result.rows) {
           console.log(JSON.stringify(row));
         }
+        console.log(result);
         res.send(result.rows);
       }
     );
