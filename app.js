@@ -195,6 +195,7 @@ app.get("/returnhistories", (req, res) => {
     res.setHeader("WWW-Authenticate", 'Basic realm="example"');
     res.end("Access denied");
   } else {
+    console.log("/returnhistories called");
     conn.query(
       `SELECT Name, Id, CreatedDate, Delivery__c FROM Eureka_Retail_Inventory__c'`,
       (err, result) => {
