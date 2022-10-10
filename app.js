@@ -212,9 +212,13 @@ app.get("/returnhistories", (req, res) => {
         if (err) {
           return console.error(err);
         }
+        console.log(result);
         console.log("total : " + result.totalSize);
         console.log("fetched : " + result.records.length);
-        res.send(result.rows);
+        for (let row of result.rows) {
+          console.log(JSON.stringify(row));
+        }
+        res.send(result);
       }
     );
   }
