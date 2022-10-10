@@ -68,7 +68,6 @@ app.get("/customers", (req, res) => {
         for (let row of result.rows) {
           console.log(JSON.stringify(row));
         }
-        console.log(result);
         res.send(result.rows);
       }
     );
@@ -190,6 +189,7 @@ conn.login(SF_USERNAME, SF_PASSWORD + SF_TOKEN, (err, userInfo) => {
 
 // get all return histories using JSForce
 app.get("/returnhistories", (req, res) => {
+  resultsArray = [];
   var credentials = basicAuth(req);
   if (!credentials || !checkCredentials(credentials.name, credentials.pass)) {
     res.statusCode = 401;
@@ -216,9 +216,11 @@ app.get("/returnhistories", (req, res) => {
         console.log(result);
         console.log("total : " + result.totalSize);
         console.log("fetched : " + result.records.length);
-        for (let row of result.rows) {
+        for (let row of result.records) {
           console.log(JSON.stringify(row));
+          resultsArray += JSON.stringify(row);
         }
+        console.log(resultsArray);
         res.send(result.records);
       }
     );
