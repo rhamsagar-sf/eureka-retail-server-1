@@ -218,7 +218,7 @@ app.get("/returnhistories", (req, res) => {
         for (let row of result.rows) {
           console.log(JSON.stringify(row));
         }
-        res.send(result);
+        res.send(result.records);
       }
     );
   }
