@@ -189,39 +189,22 @@ conn.login(SF_USERNAME, SF_PASSWORD + SF_TOKEN, (err, userInfo) => {
 
 // get all return histories using JSForce
 app.get("/returnhistories", (req, res) => {
-  resultsArray = [];
   var credentials = basicAuth(req);
   if (!credentials || !checkCredentials(credentials.name, credentials.pass)) {
     res.statusCode = 401;
     res.setHeader("WWW-Authenticate", 'Basic realm="example"');
     res.end("Access denied");
   } else {
-    console.log("/returnhistories called");
-    // conn.query(
-    //   `SELECT Name, Id, CreatedDate, Delivery__c FROM Eureka_Retail_Inventory__c'`,
-    //   (err, result) => {
-    //     if (err) throw err;
-    //     for (let row of result.rows) {
-    //       console.log(JSON.stringify(row));
-    //     }
-    //     res.send(result.rows);
-    //   }
-    // );
     conn.query(
       "SELECT Name, Item_SKU__c, Return_Reason__c, Returned_Date__c, Delivery_Status__c FROM Eureka_Returned_Item__c",
       function (err, result) {
         if (err) {
           return console.error(err);
         }
-        console.log(result);
-        console.log("total : " + result.totalSize);
-        console.log("fetched : " + result.records.length);
         for (let row of result.records) {
           console.log(JSON.stringify(row));
-          resultsArray += JSON.stringify(row);
         }
-        console.log(resultsArray);
-        res.send(result.records);
+        res.send(JSON.stringify(result.records));
       }
     );
   }
