@@ -198,7 +198,7 @@ app.get("/returnhistories", (req, res) => {
   } else {
     conn.query(
       //"SELECT Name, Item_SKU_c__c, Return_Reason_c__c, Returned_Date__c, Delivery_Status_c__c FROM Eureka_Returned_Item_c__c",
-      SELECT Name, Item_SKU_c__c, Return_Reason_c__c, Delivery_Status_c__c FROM Eureka_Returned_Item_c__c",
+      "SELECT Name, Item_SKU_c__c, Return_Reason_c__c, Delivery_Status_c__c FROM Eureka_Returned_Item_c__c",
       function (err, result) {
         if (err) {
           return console.error(err);
