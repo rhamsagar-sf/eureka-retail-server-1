@@ -30,6 +30,7 @@ const client = new Client({
   ssl: {
     rejectUnauthorized: false,
   },
+  console.log("Database Connected");
 });
 
 // Basic function to validate credentials for example
@@ -85,7 +86,7 @@ app.get("/customers/:userId", (req, res) => {
   } else {
     const userId = req.params.userId;
     client.query(
-      "SELECT * FROM salesforce.eureka_customers__c WHERE id = $1;",
+      "SELECT * FROM salesforce.eureka_customers_c__c WHERE id = $1;",
       [userId],
       (err, result) => {
         if (err) throw err;
@@ -110,7 +111,7 @@ app.post("/customers", (req, res) => {
     const { name, email, address, phone, joindate, membership, totalspent } =
       req.body;
     client.query(
-      "INSERT into salesforce.eureka_customers__c (name__c, email__c, address__c, phone__c, membership__c, totalspent__c, joindate__c, isdeleted) VALUES ($1, $2, $3, $4, $5, $6, $7, 'false');",
+      "INSERT into salesforce.eureka_customers_c__c (name__c, email__c, address__c, phone__c, membership__c, totalspent__c, joindate__c, isdeleted) VALUES ($1, $2, $3, $4, $5, $6, $7, 'false');",
       [name, email, address, phone, membership, totalspent, joindate],
       (err, result) => {
         if (err) throw err;
@@ -134,7 +135,7 @@ app.put("/customers", (req, res) => {
   } else {
     const { id, name, email, address, phone } = req.body;
     client.query(
-      "UPDATE salesforce.eureka_customers__c SET name__c = $2, email__c = $3, address__c = $4, phone__c = $5 WHERE id = $1;",
+      "UPDATE salesforce.eureka_customers_c__c SET name_c__c = $2, email_c__c = $3, address_c__c = $4, phone_c__c = $5 WHERE id = $1;",
       [id, name, email, address, phone],
       (err, result) => {
         if (err) throw err;
@@ -158,7 +159,7 @@ app.delete("/customers/:userId", (req, res) => {
   } else {
     const { id } = req.body;
     client.query(
-      "DELETE from salesforce.eureka_customers__c WHERE id = $1;",
+      "DELETE from salesforce.eureka_customers_c__c WHERE id = $1;",
       [id],
       (err, result) => {
         if (err) throw err;
@@ -196,7 +197,8 @@ app.get("/returnhistories", (req, res) => {
     res.end("Access denied");
   } else {
     conn.query(
-      "SELECT Name, Item_SKU__c, Return_Reason__c, Returned_Date__c, Delivery_Status__c FROM Eureka_Returned_Item__c",
+      //"SELECT Name, Item_SKU_c__c, Return_Reason_c__c, Returned_Date__c, Delivery_Status_c__c FROM Eureka_Returned_Item_c__c",
+      SELECT Name, Item_SKU_c__c, Return_Reason_c__c, Delivery_Status_c__c FROM Eureka_Returned_Item_c__c",
       function (err, result) {
         if (err) {
           return console.error(err);
