@@ -63,7 +63,7 @@ app.get("/customers", (req, res) => {
     res.end("Access denied");
   } else {
     client.query(
-      "SELECT * FROM salesforce.eureka_customers__c;",
+      "SELECT * FROM salesforce.eureka_customers_c__c;",
       (err, result) => {
         if (err) throw err;
         for (let row of result.rows) {
@@ -111,7 +111,7 @@ app.post("/customers", (req, res) => {
     const { name, email, address, phone, joindate, membership, totalspent } =
       req.body;
     client.query(
-      "INSERT into salesforce.eureka_customers_c__c (name__c, email__c, address__c, phone__c, membership__c, totalspent__c, joindate__c, isdeleted) VALUES ($1, $2, $3, $4, $5, $6, $7, 'false');",
+      "INSERT into salesforce.eureka_customers_c__c (name_c__c, email_c__c, address_c__c, phone_c__c, membership_c__c, totalspent_c__c, joindate_c__c, isdeleted) VALUES ($1, $2, $3, $4, $5, $6, $7, 'false');",
       [name, email, address, phone, membership, totalspent, joindate],
       (err, result) => {
         if (err) throw err;
