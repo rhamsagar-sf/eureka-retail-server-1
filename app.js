@@ -30,7 +30,7 @@ const client = new Client({
   ssl: {
     rejectUnauthorized: false,
   },
-  console.log("Database Connected");
+ 
 });
 
 // Basic function to validate credentials for example
